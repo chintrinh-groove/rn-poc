@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SplashScreenTheme" parent="SplashScreen_SplashTheme">
+        <item name="colorPrimaryDark">#000000</item>
+    </style>
+    <color name="splashscreen_bg">#424242</color>
+    <color name="app_bg">#424242</color>
+</resources>

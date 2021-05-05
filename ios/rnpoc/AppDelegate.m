@@ -11,6 +11,7 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
+#import <RNSplashScreen.h>
 #import <Firebase.h>
 
 static void InitializeFlipper(UIApplication *application) {
@@ -51,6 +52,10 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  // Set the splash screen to show by default.
+  [RNSplashScreen show]; 
+  
   return YES;
 }
 

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import analytics from '@react-native-firebase/analytics';
 
 import {LoginScreen, RegisterScreen, AppScreen} from '../screens';
 import {LOGIN, REGISTER, APP} from '../constants';
@@ -32,7 +33,19 @@ export const AppStack = () => {
   if (loading) return <MyLoading />;
 
   return (
-    <Stack.Navigator initialRouteName={LOGIN}>
+    <Stack.Navigator
+      initialRouteName={LOGIN}
+      onStateChange={async state => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = getActiveRouteName(state);
+
+        if (previousRouteName !== currentRouteName) {
+          await analytics().logScreenView({
+            screen_name: currentRouteName,
+            screen_class: currentRouteName,
+          });
+        }
+      }}>
       {!user ? (
         <>
           <Stack.Screen name={LOGIN} component={LoginScreen} />

@@ -6,14 +6,19 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import type {Node} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 // import analytics from '@react-native-firebase/analytics';
+import SplashScreen from 'react-native-splash-screen';
 
 import {AppStack} from './src/routes';
 
 const App: () => Node = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  });
+
   return (
     <NavigationContainer>
       <AppStack />
