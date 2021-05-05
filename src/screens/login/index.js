@@ -15,7 +15,6 @@ export const LoginScreen = () => {
   const [pwd, setPwd] = useState('12345678');
 
   const handlePress = async () => {
-    console.log('LOGIN', email, pwd);
     try {
       const authUser = await fbAuth.signInWithEmailAndPassword(email, pwd);
     } catch (error) {

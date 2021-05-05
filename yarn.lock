@@ -1148,6 +1148,15 @@
     query-string "^7.0.0"
     react-is "^16.13.0"
 
+"@react-navigation/drawer@^6.0.0-next.5":
+  version "6.0.0-next.5"
+  resolved "https://registry.yarnpkg.com/@react-navigation/drawer/-/drawer-6.0.0-next.5.tgz#5adbdf045e85fe7e810078e8fa17a53da7ffc82d"
+  integrity sha512-BOtf3I8n6mblU8AeE+7LWL4rNZofoZwYZfSYvw/phxijLspneBMdV7IEMTdO2XJEFJi39Yq4sqIZYJGfynmQjQ==
+  dependencies:
+    "@react-navigation/elements" "^1.0.0-next.5"
+    color "^3.1.3"
+    warn-once "^0.0.1"
+
 "@react-navigation/elements@^1.0.0-next.5":
   version "1.0.0-next.5"
   resolved "https://registry.yarnpkg.com/@react-navigation/elements/-/elements-1.0.0-next.5.tgz#bc2e05c19aa2ffc36c14fc8a7f539b44304e983e"

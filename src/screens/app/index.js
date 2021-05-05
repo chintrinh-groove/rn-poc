@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, Button} from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
-
-import {fbAuth} from '../../firebase';
+import {useTheme} from '@react-navigation/native';
 
 import {styles} from './styles';
 
 export const AppScreen = () => {
+  const {colors} = useTheme();
+
   const [enabled, setEnabled] = useState(
     crashlytics().isCrashlyticsCollectionEnabled,
   );
@@ -22,16 +23,9 @@ export const AppScreen = () => {
     crashlytics().log('App mounted.');
   }, []);
 
-  const logout = () => {
-    fbAuth.signOut().then(() => {
-      // console.log('User signed out!');
-    });
-  };
-
   return (
     <View style={styles.container}>
-      <Text>AppScreen</Text>
-      <Button onPress={logout} title="Logout" />
+      <Text style={{color: colors.text}}>AppScreen</Text>
       <Button
         title="Add To Basket"
         onPress={async () =>

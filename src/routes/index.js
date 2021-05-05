@@ -1,22 +1,35 @@
 import React, {useState, useEffect} from 'react';
 import {Image} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
 import analytics from '@react-native-firebase/analytics';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import {LoginScreen, RegisterScreen, AppScreen} from '../screens';
-import {LOGIN, REGISTER, APP} from '../constants';
+import {LOGIN, REGISTER, APP_DRAWER, APP} from '../constants';
 import {fbAuth} from '../firebase';
-import {MyLoading} from '../components';
+import {MyLoading, MyCustomDrawerContent} from '../components';
 import GrooveLogo from '../assets/logo/groove.png';
 
 const globalScreenOptions = {
-  headerStyle: {backgroundColor: '#d3d3d3'},
+  headerStyle: {backgroundColor: '#d9d9d9'},
   headerTitle: () => (
     <Image style={{width: 500 / 5, height: 174 / 5}} source={GrooveLogo} />
   ),
+  headerTitleStyle: {flex: 1, textAlign: 'center'},
 };
 
 const Stack = createStackNavigator();
+
+const Drawer = createDrawerNavigator();
+
+const AppDrawer = () => (
+  <Drawer.Navigator
+    initialRouteName={APP}
+    screenOptions={globalScreenOptions}
+    drawerContent={MyCustomDrawerContent}>
+    <Drawer.Screen name={APP} component={AppScreen} />
+  </Drawer.Navigator>
+);
 
 export const AppStack = () => {
   // Set an initializing state whilst Firebase connects
@@ -55,7 +68,9 @@ export const AppStack = () => {
           });
         }
       }}
-      screenOptions={globalScreenOptions}>
+      screenOptions={{
+        headerShown: false,
+      }}>
       {!user ? (
         <>
           <Stack.Screen name={LOGIN} component={LoginScreen} />
@@ -63,7 +78,7 @@ export const AppStack = () => {
         </>
       ) : (
         <>
-          <Stack.Screen name={APP} component={AppScreen} />
+          <Stack.Screen name={APP_DRAWER} component={AppDrawer} />
         </>
       )}
     </Stack.Navigator>
