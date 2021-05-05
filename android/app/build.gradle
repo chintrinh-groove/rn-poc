@@ -1,7 +1,5 @@
 apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services'
-
-// Apply the Crashlytics Gradle plugin
 apply plugin: 'com.google.firebase.crashlytics'
 
 import com.android.build.OutputFile
@@ -168,6 +166,9 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            firebaseCrashlytics {
+                nativeSymbolUploadEnabled true
+            }
         }
     }
 

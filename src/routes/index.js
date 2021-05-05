@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {Image} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import analytics from '@react-native-firebase/analytics';
 
@@ -6,6 +7,14 @@ import {LoginScreen, RegisterScreen, AppScreen} from '../screens';
 import {LOGIN, REGISTER, APP} from '../constants';
 import {fbAuth} from '../firebase';
 import {MyLoading} from '../components';
+import GrooveLogo from '../assets/logo/groove.png';
+
+const globalScreenOptions = {
+  headerStyle: {backgroundColor: '#d3d3d3'},
+  headerTitle: () => (
+    <Image style={{width: 500 / 5, height: 174 / 5}} source={GrooveLogo} />
+  ),
+};
 
 const Stack = createStackNavigator();
 
@@ -45,7 +54,8 @@ export const AppStack = () => {
             screen_class: currentRouteName,
           });
         }
-      }}>
+      }}
+      screenOptions={globalScreenOptions}>
       {!user ? (
         <>
           <Stack.Screen name={LOGIN} component={LoginScreen} />

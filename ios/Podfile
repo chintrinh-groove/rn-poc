@@ -27,6 +27,7 @@ target 'rnpoc' do
     react_native_post_install(installer)
   end
 
-  pod 'Firebase/Analytics'
+  pod 'RNFBAnalytics', :path => '../node_modules/@react-native-firebase/analytics'
+  pod 'RNFBCrashlytics', :path => '../node_modules/@react-native-firebase/crashlytics'
   pod 'RNFBMessaging', :path => '../node_modules/@react-native-firebase/messaging'
 end
