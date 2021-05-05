@@ -4,8 +4,13 @@ import analytics from '@react-native-firebase/analytics';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
-import {LoginScreen, RegisterScreen, AppScreen} from '../screens';
-import {LOGIN, REGISTER, APP_DRAWER, APP} from '../constants';
+import {
+  LoginScreen,
+  RegisterScreen,
+  AppScreen,
+  SettingScreen,
+} from '../screens';
+import {LOGIN, REGISTER, APP_DRAWER, APP, SETTING} from '../constants';
 import {fbAuth} from '../firebase';
 import {MyLoading, MyCustomDrawerContent} from '../components';
 import GrooveLogo from '../assets/logo/groove.png';
@@ -28,12 +33,13 @@ const AppDrawer = () => (
     screenOptions={globalScreenOptions}
     drawerContent={MyCustomDrawerContent}>
     <Drawer.Screen name={APP} component={AppScreen} />
+    <Drawer.Screen name={SETTING} component={SettingScreen} />
   </Drawer.Navigator>
 );
 
 export const AppStack = () => {
   // Set an initializing state whilst Firebase connects
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState(null);
 
@@ -41,8 +47,9 @@ export const AppStack = () => {
     // console.log(authUser);
     setUser(authUser);
     if (initializing) setInitializing(false);
-
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   useEffect(() => {

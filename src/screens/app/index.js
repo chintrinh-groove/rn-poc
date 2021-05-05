@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Button} from 'react-native';
-import analytics from '@react-native-firebase/analytics';
+// import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
 import {useTheme} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {styles} from './styles';
 
@@ -24,9 +25,9 @@ export const AppScreen = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={{color: colors.text}}>AppScreen</Text>
-      <Button
+      {/* <Button
         title="Add To Basket"
         onPress={async () =>
           await analytics().logEvent('basket', {
@@ -39,7 +40,7 @@ export const AppScreen = () => {
       />
       <Button title="Toggle Crashlytics" onPress={toggleCrashlytics} />
       <Button title="Crash" onPress={() => crashlytics().crash()} />
-      <Text>Crashlytics is currently {enabled ? 'enabled' : 'disabled'}</Text>
-    </View>
+      <Text>Crashlytics is currently {enabled ? 'enabled' : 'disabled'}</Text> */}
+    </SafeAreaView>
   );
 };

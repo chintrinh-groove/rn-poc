@@ -14,6 +14,7 @@ import {
   DarkTheme,
 } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {AppStack} from './src/routes';
 
@@ -38,9 +39,11 @@ const App = () => {
   });
 
   return (
-    <NavigationContainer theme={scheme === 'dark' ? DarkTheme : MyTheme}>
-      <AppStack />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : MyTheme}>
+        <AppStack />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 
