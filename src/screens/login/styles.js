@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    marginHorizontal: 16,
+    margin: 16,
   },
   errorText: {
     color: ALERT_COLOR,
