@@ -6,17 +6,17 @@ import React, {
 } from 'react';
 import {initReactI18next, useTranslation} from 'react-i18next';
 import i18n from 'i18next';
-import translationEN from '../../assets/languages/en.json';
-import translationVI from '../../assets/languages/vi.json';
+import enTranslation from '../../assets/language/en.json';
+import viTranslation from '../../assets/language/vi.json';
 
 // the translations
 // (tip move them in a JSON file and import them)
 const resources = {
   en: {
-    translation: translationEN,
+    translation: enTranslation,
   },
   vi: {
-    translation: translationVI,
+    translation: viTranslation,
   },
 };
 

@@ -1,17 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useTranslation} from 'react-i18next';
 
-import {useLanguage, useNetInfo} from '../../context';
+import {useNetInfo} from '../../context';
 import {MyButton} from '../../components';
 
 import {styles} from './styles';
 
 export const AppScreen = () => {
   const {connected} = useNetInfo();
-  const {t} = useTranslation();
-  const {language, selectLanguage} = useLanguage();
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -46,12 +43,6 @@ export const AppScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <MyButton
-        title={t('hello')}
-        onPress={() => {
-          selectLanguage(language === 'en' ? 'vi' : 'en');
-        }}
-      />
       <FlatList
         data={users}
         renderItem={({item}) => {
