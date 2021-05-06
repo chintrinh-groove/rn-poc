@@ -45,11 +45,12 @@ export const AppStack = () => {
 
   const onAuthStateChanged = authUser => {
     // console.log(authUser);
+    setLoading(true);
     setUser(authUser);
     if (initializing) setInitializing(false);
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 500);
   };
 
   useEffect(() => {
