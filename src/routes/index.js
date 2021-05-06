@@ -34,6 +34,10 @@ const globalScreenOptions = {
   ),
   headerTitleStyle: {flex: 1, textAlign: 'center'},
   headerTintColor: PRIMARY_COLOR,
+  drawerContentOptions: {
+    activeBackgroundColor: '#efefef',
+    activeTintColor: '#000000',
+  },
 };
 
 const Stack = createStackNavigator();
@@ -44,7 +48,6 @@ const Tab = createBottomTabNavigator();
 
 const AppDrawer = () => (
   <Drawer.Navigator
-    drawerPosition="right"
     initialRouteName={APP}
     screenOptions={globalScreenOptions}
     drawerContent={props => <MyCustomDrawerContent {...props} />}>

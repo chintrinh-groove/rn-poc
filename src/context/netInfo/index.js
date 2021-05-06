@@ -1,9 +1,12 @@
 import React, {createContext, useContext, useState, useEffect} from 'react';
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo, {
+  useNetInfo as useRNNetInfo,
+} from '@react-native-community/netinfo';
 
 const NetInfoContext = createContext();
 
 export const NetInfoProvider = ({children}) => {
+  const netInfo = useRNNetInfo();
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
@@ -16,7 +19,7 @@ export const NetInfoProvider = ({children}) => {
 
     // Unsubscribe
     unsubscribe();
-  }, []);
+  }, [netInfo.isConnected]);
 
   return (
     <NetInfoContext.Provider value={{connected}}>

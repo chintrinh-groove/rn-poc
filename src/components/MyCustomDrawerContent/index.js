@@ -19,7 +19,13 @@ export const MyCustomDrawerContent = props => {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
-      <DrawerItem label="LOGOUT" onPress={logout} />
+      <DrawerItem
+        // icon={({color, size}) => (
+        //   <Icon name="calendar-alt" color={color} size={size} solid />
+        // )}
+        label="LOGOUT"
+        onPress={logout}
+      />
     </DrawerContentScrollView>
   );
 };
