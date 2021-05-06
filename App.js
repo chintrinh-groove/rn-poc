@@ -17,6 +17,7 @@ import SplashScreen from 'react-native-splash-screen';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {AppStack} from './src/routes';
+import {NetInfoProvider} from './src/context';
 
 const MyTheme = {
   ...DefaultTheme,
@@ -40,9 +41,11 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : MyTheme}>
-        <AppStack />
-      </NavigationContainer>
+      <NetInfoProvider>
+        <NavigationContainer theme={scheme === 'dark' ? DarkTheme : MyTheme}>
+          <AppStack />
+        </NavigationContainer>
+      </NetInfoProvider>
     </SafeAreaProvider>
   );
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import {View, Text} from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -8,7 +7,7 @@ import {
 
 import {fbAuth} from '../../firebase';
 
-import {styles} from './styles';
+// import {styles} from './styles';
 
 export const MyCustomDrawerContent = props => {
   const logout = () => {

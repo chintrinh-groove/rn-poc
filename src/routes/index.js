@@ -3,6 +3,7 @@ import {Image} from 'react-native';
 import analytics from '@react-native-firebase/analytics';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {
   LoginScreen,
@@ -10,32 +11,67 @@ import {
   AppScreen,
   SettingScreen,
 } from '../screens';
-import {LOGIN, REGISTER, APP_DRAWER, APP, SETTING} from '../constants';
+import {
+  LOGIN,
+  REGISTER,
+  APP_DRAWER,
+  APP_TABS,
+  APP,
+  SETTING,
+  PRIMARY_COLOR,
+} from '../constants';
 import {fbAuth} from '../firebase';
-import {MyLoading, MyCustomDrawerContent} from '../components';
+import {MyLoading, MyCustomDrawerContent, MyTabBar} from '../components';
 import GrooveLogo from '../assets/logo/groove.png';
 
 const globalScreenOptions = {
-  headerStyle: {backgroundColor: '#d9d9d9'},
   headerTitle: () => (
-    <Image style={{width: 500 / 5, height: 174 / 5}} source={GrooveLogo} />
+    <Image
+      style={{width: 500 / 5, height: 174 / 5}}
+      source={GrooveLogo}
+      resizeMode="contain"
+    />
   ),
   headerTitleStyle: {flex: 1, textAlign: 'center'},
+  headerTintColor: PRIMARY_COLOR,
 };
 
 const Stack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
 
+const Tab = createBottomTabNavigator();
+
 const AppDrawer = () => (
   <Drawer.Navigator
+    drawerPosition="right"
     initialRouteName={APP}
     screenOptions={globalScreenOptions}
-    drawerContent={MyCustomDrawerContent}>
-    <Drawer.Screen name={APP} component={AppScreen} />
-    <Drawer.Screen name={SETTING} component={SettingScreen} />
+    drawerContent={props => <MyCustomDrawerContent {...props} />}>
+    <Drawer.Screen name={APP_TABS} component={AppTabs} />
   </Drawer.Navigator>
 );
+
+function AppTabs() {
+  return (
+    <Tab.Navigator
+      initialRouteName={APP}
+      screenOptions={{
+        headerShown: false,
+      }}
+      tabBar={props => <MyTabBar {...props} />}>
+      <Tab.Screen
+        name={APP}
+        component={AppScreen}
+        options={{
+          tabBarLabel: APP,
+          tabBarIcon: ({color, size}) => <Building color={color} size={size} />,
+        }}
+      />
+      <Tab.Screen name={SETTING} component={SettingScreen} />
+    </Tab.Navigator>
+  );
+}
 
 export const AppStack = () => {
   // Set an initializing state whilst Firebase connects

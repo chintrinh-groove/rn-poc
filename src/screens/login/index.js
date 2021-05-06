@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Alert, Pressable} from 'react-native';
+import {Image, View, Text, Alert, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -8,6 +8,7 @@ import {MyButton, MyTextInput} from '../../components';
 import {fbAuth} from '../../firebase';
 import {REGISTER} from '../../constants';
 import {loginSchema} from '../../validation';
+import GrooveLogo from '../../assets/logo/groove.png';
 
 import {styles} from './styles';
 
@@ -34,14 +35,14 @@ export const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>LoginScreen</Text>
+      <Image style={{width: 500 / 2, height: 174 / 2}} source={GrooveLogo} />
 
       <Controller
         control={control}
         render={({field: {onChange, onBlur, error, value}}) => (
           <MyTextInput
             onBlur={onBlur}
-            onChangeText={value => onChange(value)}
+            onChangeText={onChange}
             value={value}
             placeholder="email"
           />
@@ -58,7 +59,7 @@ export const LoginScreen = () => {
         render={({field: {onChange, onBlur, value}}) => (
           <MyTextInput
             onBlur={onBlur}
-            onChangeText={value => onChange(value)}
+            onChangeText={onChange}
             value={value}
             placeholder="password"
             secureTextEntry
@@ -69,24 +70,6 @@ export const LoginScreen = () => {
         defaultValue="12345678"
       />
       {errors.pwd && <Text style={styles.errorText}>{errors.pwd.message}</Text>}
-      <Controller
-        control={control}
-        render={({field: {onChange, onBlur, value}}) => (
-          <MyTextInput
-            onBlur={onBlur}
-            onChangeText={value => onChange(value)}
-            value={value}
-            placeholder="confirm Password"
-            secureTextEntry
-          />
-        )}
-        name="confirmPwd"
-        rules={{required: true}}
-        defaultValue="12345678"
-      />
-      {errors.confirmPwd && (
-        <Text style={styles.errorText}>{errors.confirmPwd.message}</Text>
-      )}
 
       <MyButton title="Login" onPress={onSubmit} />
       <Pressable onPress={navigateRegister}>
