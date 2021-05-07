@@ -5,3 +5,4 @@ export * from './MyCustomDrawerContent';
 export * from './MyTabBar';
 export * from './MySwitch';
 export * from './MyText';
+export * from './MyFlatList';
