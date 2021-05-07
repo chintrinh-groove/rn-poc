@@ -18,4 +18,8 @@ export const styles = StyleSheet.create({
   detailContainer: {
     marginLeft: 16,
   },
+  languageContainer: {flexDirection: 'row'},
+  iconContainer: {
+    marginLeft: 16,
+  },
 });

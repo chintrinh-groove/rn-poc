@@ -108,8 +108,8 @@ export const AppScreen = () => {
           height: (windowWidth * 3) / 4,
         }}
       />
-      <MyFlatList url="https://jsonplaceholder.typicode.com/photos?" />
-      {/* <FlatList
+      {/* <MyFlatList url="https://jsonplaceholder.typicode.com/photos?" /> */}
+      <FlatList
         data={videos}
         renderItem={({item}) => {
           return (
@@ -150,7 +150,7 @@ export const AppScreen = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-      /> */}
+      />
     </SafeAreaView>
   );
 };

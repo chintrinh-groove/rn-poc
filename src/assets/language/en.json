@@ -1,3 +1,14 @@
 {
-    "hello": "hello"
+    "hello": "hello",
+    
+    "src": {
+        "screens": {
+            "setting": {
+                "DM": "Dark mode",
+                "App": "Appearance",
+                "Lan": "Language",
+                "LO": "Logout"
+            }
+        }
+    }
 }

@@ -1,3 +1,14 @@
 {
-    "hello": "xin chào"
+    "hello": "xin chào",
+
+    "src": {
+        "screens": {
+            "setting": {
+                "DM": "Chế độ tối",
+                "App": "Hiển thị",
+                "Lan": "Ngôn ngữ",
+                "LO": "Đăng xuất"
+            }
+        }
+    }
 }
