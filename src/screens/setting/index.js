@@ -1,18 +1,30 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import {ArrowSVG} from '../../assets';
-import {MySwitch} from '../../components';
+import {useTheme} from '@react-navigation/native';
 
+import {ArrowSVG} from '../../assets';
+import {MySwitch, MyText} from '../../components';
 import {PLACEHOLDER_AVATAR} from '../../constants';
+import {useMyTheme} from '../../context';
+import {fbAuth} from '../../firebase';
+
 import {styles} from './styles';
 
 export const SettingScreen = () => {
-  const [darkMode, setDarkMode] = useState(false);
-  const toggleDarkMode = () => {};
+  const {colors} = useTheme();
+  const {isDark, setIsDark, toggleColor} = useMyTheme();
 
-  const navigateTheme = () => {};
+  const navigateTheme = () => {
+    toggleColor();
+  };
 
   const openLanguageModal = () => {};
+
+  const logout = () => {
+    fbAuth.signOut().then(() => {
+      // console.log('User signed out!');
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -23,25 +35,29 @@ export const SettingScreen = () => {
             source={{uri: PLACEHOLDER_AVATAR}}
           />
           <View style={styles.detailContainer}>
-            <Text>Trinh Chin Chin</Text>
-            <Text>+84 704498756</Text>
+            <MyText primary>Trinh Chin Chin</MyText>
+            <MyText>+84 704498756</MyText>
           </View>
         </View>
         <ArrowSVG fill="#00000076" width={16} height={16} />
       </TouchableOpacity>
       <View style={styles.row}>
-        <Text>Dark Mode</Text>
+        <MyText>Dark Mode</MyText>
         <MySwitch
-          value={darkMode}
-          onValueChange={({name, value}) => setDarkMode(value)}
+          value={isDark}
+          onValueChange={({name, value}) => setIsDark(value)}
         />
       </View>
       <TouchableOpacity style={styles.row} onPress={navigateTheme}>
-        <Text>Appearance</Text>
+        <MyText>Appearance</MyText>
         <ArrowSVG fill="#00000076" width={16} height={16} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.row} onPress={openLanguageModal}>
-        <Text>Language</Text>
+        <MyText>Language</MyText>
+        <ArrowSVG fill="#00000076" width={16} height={16} />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.row} onPress={logout}>
+        <MyText>Log out</MyText>
         <ArrowSVG fill="#00000076" width={16} height={16} />
       </TouchableOpacity>
     </View>

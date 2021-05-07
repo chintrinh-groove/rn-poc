@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {View, TextInput, Pressable, Text} from 'react-native';
+import {View, TextInput, Pressable} from 'react-native';
+import {useTheme} from '@react-navigation/native';
 
 import {styles} from './styles';
 import EyeSvg from '../../assets/components/MyTextInput/eye.svg';
@@ -13,6 +14,7 @@ export const MyTextInput = ({
   secureTextEntry = false,
   ...rest
 }) => {
+  const {colors} = useTheme();
   const [secure, setSecure] = useState(secureTextEntry);
 
   const toggle = () => setSecure(prevState => !prevState);
@@ -21,7 +23,12 @@ export const MyTextInput = ({
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              color: colors.text,
+            },
+          ]}
           value={value}
           onChangeText={onChangeText}
           onBlur={onBlur}

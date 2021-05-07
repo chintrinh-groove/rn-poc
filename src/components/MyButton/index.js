@@ -1,5 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
+import {useTheme} from '@react-navigation/native';
 
 import {styles} from './styles';
 
@@ -8,21 +9,24 @@ export const MyButton = ({
   containerStyle,
   type = 'primary',
   disabled = false,
+  primary,
   ...rest
 }) => {
+  const {colors} = useTheme();
   return (
     <TouchableOpacity
-      style={[styles.button, styles[type], containerStyle]}
+      style={[
+        {borderColor: colors.primary, borderWidth: 1},
+        styles.button,
+        containerStyle,
+        primary && {
+          backgroundColor: colors.primary,
+        },
+      ]}
       disabled={disabled}
       {...rest}>
       {title && (
-        <Text
-          style={[
-            styles.buttonText,
-            type === 'primary' ? styles.whiteText : styles.primaryText,
-          ]}>
-          {title}
-        </Text>
+        <Text style={[{color: colors.text}, styles.buttonText]}>{title}</Text>
       )}
     </TouchableOpacity>
   );

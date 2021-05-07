@@ -6,14 +6,16 @@ export const styles = StyleSheet.create({
     margin: 16,
   },
   row: {
-    marginBottom: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    minHeight: 48,
   },
   informationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  detailContainer: {},
+  detailContainer: {
+    marginLeft: 16,
+  },
 });

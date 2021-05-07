@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 
-import {MyTextInput, MyButton} from '../../components';
+import {MyTextInput, MyButton, MyText} from '../../components';
 import {LOGIN} from '../../constants';
 import {fbAuth} from '../../firebase';
 import {registerSchema} from '../../validation';
@@ -112,7 +112,7 @@ export const RegisterScreen = () => {
 
       <MyButton title="Register" onPress={onSubmit} />
       <Pressable onPress={navigateLogin}>
-        <Text>Login!</Text>
+        <MyText>Login!</MyText>
       </Pressable>
     </View>
   );

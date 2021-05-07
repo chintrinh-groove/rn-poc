@@ -7,3 +7,5 @@ How to Use Analytics in Your React Native App With Firebase: https://betterprogr
 Change package name for Android in React Native: https://stackoverflow.com/questions/37389905/change-package-name-for-android-in-react-native
 
 how to reset firebase auth password in react native: https://stackoverflow.com/questions/54515444/how-to-reset-firebase-auth-password-in-react-native
+
+Flw material.io: https://material.io/design/layout/spacing-methods.html#baseline-grid
