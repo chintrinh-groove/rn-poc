@@ -11,6 +11,7 @@ import {
   RegisterScreen,
   AppScreen,
   SettingScreen,
+  AppearanceScreen,
 } from '../screens';
 import {
   LOGIN,
@@ -19,6 +20,7 @@ import {
   APP_TABS,
   APP,
   SETTING,
+  APPEARANCE,
 } from '../constants';
 import {fbAuth} from '../firebase';
 import {MyLoading, MyCustomDrawerContent, MyTabBar} from '../components';
@@ -138,18 +140,40 @@ export const AppStack = () => {
             screen_class: currentRouteName,
           });
         }
-      }}
-      screenOptions={{
-        headerShown: false,
       }}>
       {!user ? (
         <>
-          <Stack.Screen name={LOGIN} component={LoginScreen} />
-          <Stack.Screen name={REGISTER} component={RegisterScreen} />
+          <Stack.Screen
+            name={LOGIN}
+            component={LoginScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name={REGISTER}
+            component={RegisterScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
         </>
       ) : (
         <>
-          <Stack.Screen name={APP_DRAWER} component={AppDrawer} />
+          <Stack.Screen
+            name={APP_DRAWER}
+            component={AppDrawer}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name={APPEARANCE}
+            component={AppearanceScreen}
+            options={{
+              headerBackTitleVisible: false,
+            }}
+          />
         </>
       )}
     </Stack.Navigator>

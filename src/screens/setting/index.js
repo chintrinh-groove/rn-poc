@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import {useTheme} from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
 import {ArrowSVG} from '../../assets';
 import {MySwitch, MyText} from '../../components';
-import {PLACEHOLDER_AVATAR} from '../../constants';
+import {APPEARANCE, PLACEHOLDER_AVATAR} from '../../constants';
 import {useLanguage, useMyTheme} from '../../context';
 import {fbAuth} from '../../firebase';
 
@@ -14,11 +14,11 @@ import {styles} from './styles';
 export const SettingScreen = () => {
   const {colors} = useTheme();
   const {t} = useTranslation();
-  const {isDark, setIsDark, toggleColor} = useMyTheme();
+  const {isDark, setIsDark} = useMyTheme();
   const {selectedLanguageName, openLanguageModal} = useLanguage();
-  const navigateTheme = () => {
-    toggleColor();
-  };
+  const navigation = useNavigation();
+
+  const navigateTheme = () => navigation.navigate(APPEARANCE);
 
   const logout = () => {
     fbAuth.signOut().then(() => {

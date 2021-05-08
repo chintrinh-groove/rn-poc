@@ -7,7 +7,6 @@ import {styles} from './styles';
 export const MyButton = ({
   title,
   containerStyle,
-  type = 'primary',
   disabled = false,
   primary,
   ...rest
@@ -26,7 +25,13 @@ export const MyButton = ({
       disabled={disabled}
       {...rest}>
       {title && (
-        <Text style={[{color: colors.text}, styles.buttonText]}>{title}</Text>
+        <Text
+          style={[
+            {color: primary ? '#fff' : colors.primary},
+            styles.buttonText,
+          ]}>
+          {title}
+        </Text>
       )}
     </TouchableOpacity>
   );

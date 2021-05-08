@@ -58,7 +58,7 @@ export const MyThemeProvider = ({children}) => {
   };
 
   return (
-    <MyThemeContext.Provider value={{isDark, setIsDark, toggleColor}}>
+    <MyThemeContext.Provider value={{isDark, setIsDark, primary, setPrimary}}>
       <NavigationContainer theme={isDark ? MyDarkTheme : MyLightTheme}>
         {children}
       </NavigationContainer>
