@@ -3,6 +3,7 @@ import {Image, View, Text, Alert, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
+import {useTranslation} from 'react-i18next';
 
 import {MyButton, MyTextInput, MyText} from '../../components';
 import {fbAuth} from '../../firebase';
@@ -14,6 +15,7 @@ import {styles} from './styles';
 
 export const LoginScreen = () => {
   const navigation = useNavigation();
+  const {t} = useTranslation();
 
   const {
     control,
@@ -32,6 +34,10 @@ export const LoginScreen = () => {
   });
 
   const navigateRegister = () => navigation.navigate(REGISTER);
+
+  const passwordT = t('src.screens.login.Pa');
+  const loginT = t('src.screens.login.Lo');
+  const registerT = t('src.screens.login.Re');
 
   return (
     <View style={styles.container}>
@@ -61,7 +67,7 @@ export const LoginScreen = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder="password"
+            placeholder={passwordT}
             secureTextEntry
           />
         )}
@@ -71,9 +77,9 @@ export const LoginScreen = () => {
       />
       {errors.pwd && <Text style={styles.errorText}>{errors.pwd.message}</Text>}
 
-      <MyButton title="Login" onPress={onSubmit} primary />
+      <MyButton title={loginT} onPress={onSubmit} primary />
       <Pressable onPress={navigateRegister}>
-        <MyText>Register!</MyText>
+        <MyText>{registerT}</MyText>
       </Pressable>
     </View>
   );

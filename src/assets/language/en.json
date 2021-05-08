@@ -1,14 +1,26 @@
 {
-    "hello": "hello",
-    
-    "src": {
-        "screens": {
-            "setting": {
-                "DM": "Dark mode",
-                "App": "Appearance",
-                "Lan": "Language",
-                "LO": "Logout"
-            }
-        }
+  "hello": "hello",
+
+  "src": {
+    "screens": {
+      "login": {
+        "Pa": "Password",
+        "Lo": "Login",
+        "Re": "Register"
+      },
+      "register": {
+        "FN": "Full name",
+        "Pa": "Password",
+        "CP": "Confirm password",
+        "Re": "Register",
+        "Lo": "Login"
+      },
+      "setting": {
+        "DM": "Dark mode",
+        "App": "Appearance",
+        "Lan": "Language",
+        "LO": "Logout"
+      }
     }
+  }
 }

@@ -1,14 +1,26 @@
 {
-    "hello": "xin chào",
+  "hello": "xin chào",
 
-    "src": {
-        "screens": {
-            "setting": {
-                "DM": "Chế độ tối",
-                "App": "Hiển thị",
-                "Lan": "Ngôn ngữ",
-                "LO": "Đăng xuất"
-            }
-        }
+  "src": {
+    "screens": {
+      "login": {
+        "Pa": "Mật khẩu",
+        "Lo": "Đăng nhập",
+        "Re": "Đăng ký"
+      },
+      "register": {
+        "FN": "Họ tên",
+        "Pa": "Mật khẩu",
+        "CP": "Xác nhận mật khẩu",
+        "Re": "Đăng ký",
+        "Lo": "Đăng nhập"
+      },
+      "setting": {
+        "DM": "Chế độ tối",
+        "App": "Hiển thị",
+        "Lan": "Ngôn ngữ",
+        "LO": "Đăng xuất"
+      }
     }
+  }
 }

@@ -3,6 +3,7 @@ import {View, Text, Pressable, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
+import {useTranslation} from 'react-i18next';
 
 import {MyTextInput, MyButton, MyText} from '../../components';
 import {LOGIN} from '../../constants';
@@ -13,6 +14,7 @@ import {styles} from './styles';
 
 export const RegisterScreen = () => {
   const navigation = useNavigation();
+  const {t} = useTranslation();
 
   const {
     control,
@@ -37,18 +39,24 @@ export const RegisterScreen = () => {
 
   const navigateLogin = () => navigation.navigate(LOGIN);
 
+  const fullNameT = t('src.screens.register.FN');
+  const passwordT = t('src.screens.register.Pa');
+  const confirmPasswordT = t('src.screens.register.CP');
+  const registerT = t('src.screens.register.Re');
+  const loginT = t('src.screens.register.Lo');
+
   return (
     <View style={styles.container}>
       <Text>RegisterScreen</Text>
 
       <Controller
         control={control}
-        render={({field: {onChange, onBlur, error, value}}) => (
+        render={({field: {onChange, onBlur, value}}) => (
           <MyTextInput
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder="fullName"
+            placeholder={fullNameT}
           />
         )}
         name="fullName"
@@ -60,7 +68,7 @@ export const RegisterScreen = () => {
       )}
       <Controller
         control={control}
-        render={({field: {onChange, onBlur, error, value}}) => (
+        render={({field: {onChange, onBlur, value}}) => (
           <MyTextInput
             onBlur={onBlur}
             onChangeText={onChange}
@@ -82,7 +90,7 @@ export const RegisterScreen = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder="password"
+            placeholder={passwordT}
             secureTextEntry
           />
         )}
@@ -98,7 +106,7 @@ export const RegisterScreen = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder="confirm password"
+            placeholder={confirmPasswordT}
             secureTextEntry
           />
         )}
@@ -110,9 +118,9 @@ export const RegisterScreen = () => {
         <Text style={styles.errorText}>{errors.confirmPwd.message}</Text>
       )}
 
-      <MyButton title="Register" onPress={onSubmit} />
+      <MyButton title={registerT} onPress={onSubmit} />
       <Pressable onPress={navigateLogin}>
-        <MyText>Login!</MyText>
+        <MyText>{loginT}</MyText>
       </Pressable>
     </View>
   );
