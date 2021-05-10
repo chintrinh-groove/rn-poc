@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useLayoutEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -6,10 +6,12 @@ import {
   Image,
   TouchableOpacity,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import YouTube from 'react-native-youtube';
 import moment from 'moment';
+import {useTheme} from '@react-navigation/native';
 
 import {useNetInfo} from '../../context';
 import {MyButton, MyText, MyFlatList} from '../../components';
@@ -19,7 +21,9 @@ import {styles} from './styles';
 
 export const AppScreen = () => {
   const {connected} = useNetInfo();
+  const {colors} = useTheme();
 
+  const [loading, setLoading] = useState(false);
   const [videoId, setVideoId] = useState('imFTcjHIY_s');
   const [videos, setVideos] = useState([]);
   const [pageToken, setPageToken] = useState('');
@@ -29,37 +33,63 @@ export const AppScreen = () => {
   const [error, setError] = useState();
   const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    // connected && fetchVideos();
+  useLayoutEffect(() => {
+    setLoading(true);
+    connected && fetchVideos();
   }, []);
 
   const fetchVideos = async nextPageToken => {
-    const urlSearchParams = new URLSearchParams({
-      part: 'snippet',
-      key: YOUTUBE_API_KEY,
-      ...(nextPageToken ? {pageToken: nextPageToken} : {}),
-    });
-    const res = await fetch(
-      'https://youtube.googleapis.com/youtube/v3/search?' + urlSearchParams,
-    );
-    const data = await res.json();
-    !nextPageToken && setVideoId(data.items[0].id.videoId);
-    setPageToken(data.nextPageToken);
-    setVideos(data.items);
-    // console.log(JSON.stringify(data, null, 2));
+    setTimeout(async () => {
+      try {
+        const urlSearchParams = new URLSearchParams({
+          part: 'snippet',
+          key: YOUTUBE_API_KEY,
+          ...(nextPageToken ? {pageToken: nextPageToken} : {}),
+        });
+        const res = await fetch(
+          'https://youtube.googleapis.com/youtube/v3/search?' + urlSearchParams,
+        );
+        const data = await res.json();
+        console.log(nextPageToken, data);
+        if (nextPageToken) {
+          setPageToken(data.nextPageToken);
+          setVideos(prevState => prevState.concat(data.items));
+        } else {
+          console.log(JSON.stringify(data, null, 2));
+          // console.log(data.items);
+          setVideos(data.items);
+          setPageToken(data.nextPageToken);
+          // setVideoId(data.items[0].id.videoId);
+          // setPageToken(null);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+        setRefreshing(false);
+      }
+    }, 500);
   };
 
   const refreshFetch = () => {
     connected && fetchVideos();
   };
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
 
     setTimeout(() => {
-      setRefreshing(false);
+      setPageToken(null);
+      connected && fetchVideos();
     }, 500);
   }, []);
+
+  const handleLoadMore = () => {
+    if (!loading) {
+      setLoading(true);
+      connected && fetchVideos(pageToken); // method for API call
+    }
+  };
 
   if (!connected) {
     return (
@@ -76,6 +106,21 @@ export const AppScreen = () => {
       </SafeAreaView>
     );
   }
+
+  const renderFooter = () => {
+    //it will show indicator at the bottom of the list when data is loading otherwise it returns null
+    if (!loading) return null;
+    return (
+      <View
+        style={{
+          height: 150 + 16,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <ActivityIndicator color={colors.primary} />
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right']}>
@@ -134,6 +179,9 @@ export const AppScreen = () => {
           );
         }}
         keyExtractor={item => item.id.videoId}
+        ListFooterComponent={renderFooter}
+        onEndReachedThreshold={0.5}
+        onEndReached={handleLoadMore}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
