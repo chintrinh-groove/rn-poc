@@ -1,7 +1,13 @@
 import React, {useState} from 'react';
 import {View, Image, TouchableOpacity} from 'react-native';
-import {useNavigation, useTheme} from '@react-navigation/native';
+import {
+  useNavigation,
+  useTheme,
+  useFocusEffect,
+} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import remoteConfig from '@react-native-firebase/remote-config';
 
 import {ArrowSVG} from '../../assets';
 import {MySwitch, MyText, MyModal} from '../../components';
@@ -18,12 +24,43 @@ export const SettingScreen = () => {
   const {selectedLanguageName, openLanguageModal} = useLanguage();
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [show, setShow] = useState({
+    language: false,
+    primary: false,
+    dark: false,
+  });
+
+  useFocusEffect(
+    React.useCallback(() => {
+      remoteConfig()
+        .fetchAndActivate()
+        .then(activated => {
+          if (!activated) console.log('Remote Config not activated');
+          return remoteConfig().fetch();
+        })
+        .then(() => {
+          const languageFeature = remoteConfig()
+            .getValue('language')
+            .asNumber();
+          const pirmaryFeature = remoteConfig().getValue('primary').asNumber();
+          const darkFeature = remoteConfig().getValue('dark').asNumber();
+          // console.log(languageFeature, pirmaryFeature, darkFeature);
+          setShow({
+            language: languageFeature === 1,
+            primary: pirmaryFeature === 1,
+            dark: darkFeature === 1,
+          });
+        });
+    }, []),
+  );
 
   const navigateTheme = () => navigation.navigate(APPEARANCE);
 
   const logout = () => {
-    fbAuth.signOut().then(() => {
+    fbAuth.signOut().then(async () => {
       // console.log('User signed out!');
+      const keys = ['@language', '@primary', '@dark'];
+      await AsyncStorage.multiRemove(keys);
       closeModal();
     });
   };
@@ -58,28 +95,34 @@ export const SettingScreen = () => {
           <ArrowSVG fill={colors.text} width={16} height={16} />
         </View>
       </TouchableOpacity>
-      <View style={styles.row}>
-        <MyText>{darkModeT}</MyText>
-        <MySwitch
-          value={isDark}
-          onValueChange={({name, value}) => selectDark(value)}
-        />
-      </View>
-      <TouchableOpacity style={styles.row} onPress={navigateTheme}>
-        <MyText>{appearanceT}</MyText>
-        <View style={styles.iconContainer}>
-          <ArrowSVG fill={colors.text} width={16} height={16} />
+      {show.dark && (
+        <View style={styles.row}>
+          <MyText>{darkModeT}</MyText>
+          <MySwitch
+            value={isDark}
+            onValueChange={({name, value}) => selectDark(value)}
+          />
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.row} onPress={openLanguageModal}>
-        <MyText>{languageT}</MyText>
-        <View style={styles.languageContainer}>
-          <MyText>{selectedLanguageName === 'vietnam' ? viT : enT}</MyText>
+      )}
+      {show.primary && (
+        <TouchableOpacity style={styles.row} onPress={navigateTheme}>
+          <MyText>{appearanceT}</MyText>
           <View style={styles.iconContainer}>
             <ArrowSVG fill={colors.text} width={16} height={16} />
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      )}
+      {show.language && (
+        <TouchableOpacity style={styles.row} onPress={openLanguageModal}>
+          <MyText>{languageT}</MyText>
+          <View style={styles.languageContainer}>
+            <MyText>{selectedLanguageName === 'vietnam' ? viT : enT}</MyText>
+            <View style={styles.iconContainer}>
+              <ArrowSVG fill={colors.text} width={16} height={16} />
+            </View>
+          </View>
+        </TouchableOpacity>
+      )}
       <TouchableOpacity style={styles.row} onPress={openModal}>
         <MyText>{logoutT}</MyText>
         <View style={styles.iconContainer}>

@@ -6,11 +6,39 @@ import {
   DarkTheme,
 } from '@react-navigation/native';
 import {useAsyncStorage} from '@react-native-async-storage/async-storage';
+// import remoteConfig from '@react-native-firebase/remote-config';
 
 import {PRIMARY_COLOR} from '../../constants';
-import {getRandomColor} from '../../utils';
+// import {getRandomColor} from '../../utils';
 
 const MyThemeContext = createContext();
+
+// remoteConfig()
+//   .setDefaults({
+//     awesome_new_feature: 'disabled',
+//   })
+//   .then(() => remoteConfig().fetchAndActivate())
+//   .then(fetchedRemotely => {
+//     if (fetchedRemotely) {
+//       console.log('Configs were retrieved from the backend and activated.');
+//     } else {
+//       console.log(
+//         'No configs were fetched from the backend, and the local configs were already activated',
+//       );
+//     }
+//   });
+
+// const awesomeNewFeature = remoteConfig().getValue('awesome_new_feature');
+
+// console.log(awesomeNewFeature.asString());
+
+// if (awesomeNewFeature.getSource() === 'remote') {
+//   console.log('Parameter value was from the Firebase servers.');
+// } else if (awesomeNewFeature.getSource() === 'default') {
+//   console.log('Parameter value was from a default value.');
+// } else {
+//   console.log('Parameter value was from a locally cached value.');
+// }
 
 export const MyThemeProvider = ({children}) => {
   // const scheme = useColorScheme();

@@ -34,8 +34,8 @@ export const AppScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   useLayoutEffect(() => {
-    setLoading(true);
-    connected && fetchVideos();
+    // setLoading(true);
+    // connected && fetchVideos();
   }, []);
 
   const fetchVideos = async nextPageToken => {
@@ -50,7 +50,7 @@ export const AppScreen = () => {
           'https://youtube.googleapis.com/youtube/v3/search?' + urlSearchParams,
         );
         const data = await res.json();
-        console.log(nextPageToken, data);
+        // console.log(nextPageToken, data);
         if (nextPageToken) {
           setPageToken(data.nextPageToken);
           setVideos(prevState => prevState.concat(data.items));
