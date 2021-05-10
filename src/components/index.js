@@ -6,3 +6,4 @@ export * from './MyTabBar';
 export * from './MySwitch';
 export * from './MyText';
 export * from './MyFlatList';
+export * from './MyModal';

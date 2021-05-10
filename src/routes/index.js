@@ -25,7 +25,13 @@ import {
 import {fbAuth} from '../firebase';
 import {MyLoading, MyCustomDrawerContent, MyTabBar} from '../components';
 import GrooveLogo from '../assets/logo/groove.png';
-import {ActiveBuilding, Building, ActiveGearSVG, GearSVG} from '../assets';
+import {
+  ActiveBuildingSVG,
+  BuildingSVG,
+  ActiveGearSVG,
+  GearSVG,
+} from '../assets';
+import {useTranslation} from 'react-i18next';
 
 const globalScreenOptions = colors => {
   return {
@@ -80,9 +86,9 @@ function AppTabs() {
         options={{
           tabBarIcon: ({focused, color, size}) =>
             focused ? (
-              <ActiveBuilding fill={color} size={size} />
+              <ActiveBuildingSVG fill={color} size={size} />
             ) : (
-              <Building fill={color} size={size} />
+              <BuildingSVG fill={color} size={size} />
             ),
         }}
       />
@@ -104,6 +110,7 @@ function AppTabs() {
 
 export const AppStack = () => {
   // Set an initializing state whilst Firebase connects
+  const {t} = useTranslation();
   const [loading, setLoading] = useState(true);
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState(null);
@@ -126,6 +133,8 @@ export const AppStack = () => {
   if (initializing) return null;
 
   if (loading) return <MyLoading />;
+
+  const appearanceT = t('src.routes.App');
 
   return (
     <Stack.Navigator
@@ -172,6 +181,7 @@ export const AppStack = () => {
             component={AppearanceScreen}
             options={{
               headerBackTitleVisible: false,
+              headerTitle: appearanceT,
             }}
           />
         </>

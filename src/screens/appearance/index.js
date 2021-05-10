@@ -1,5 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 import {MyText} from '../../components';
 import {useMyTheme} from '../../context';
@@ -24,12 +25,15 @@ const colors = [
 
 export const AppearanceScreen = () => {
   const {primary, selectPrimary} = useMyTheme();
+  const {t} = useTranslation();
+
+  const fovoriteColorT = t('src.screens.appearance.FC');
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <MyText h5 bold>
-          Favorite color
+          {fovoriteColorT}
         </MyText>
       </View>
       <View style={styles.colorContainer}>

@@ -2,6 +2,16 @@
   "hello": "xin chào",
 
   "src": {
+    "components": {
+      "MyModal": {
+        "DYWTL": "Bạn có muốn đăng xuất?",
+        "Ca": "Huỷ",
+        "LO": "Đăng xuất"
+      }
+    },
+    "routes": {
+      "App": "Hiển thị"
+    },
     "screens": {
       "login": {
         "Pa": "Mật khẩu",
@@ -19,7 +29,12 @@
         "DM": "Chế độ tối",
         "App": "Hiển thị",
         "Lan": "Ngôn ngữ",
+        "Vi": "Việt Nam",
+        "En": "English",
         "LO": "Đăng xuất"
+      },
+      "appearance": {
+        "FC": "Màu yêu thích"
       }
     }
   }

@@ -1,10 +1,10 @@
-import React from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {View, Image, TouchableOpacity} from 'react-native';
 import {useNavigation, useTheme} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
 import {ArrowSVG} from '../../assets';
-import {MySwitch, MyText} from '../../components';
+import {MySwitch, MyText, MyModal} from '../../components';
 import {APPEARANCE, PLACEHOLDER_AVATAR} from '../../constants';
 import {useLanguage, useMyTheme} from '../../context';
 import {fbAuth} from '../../firebase';
@@ -14,21 +14,29 @@ import {styles} from './styles';
 export const SettingScreen = () => {
   const {colors} = useTheme();
   const {t} = useTranslation();
-  const {isDark, selectDark, setIsDark} = useMyTheme();
+  const {isDark, selectDark} = useMyTheme();
   const {selectedLanguageName, openLanguageModal} = useLanguage();
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const navigateTheme = () => navigation.navigate(APPEARANCE);
 
   const logout = () => {
     fbAuth.signOut().then(() => {
       // console.log('User signed out!');
+      closeModal();
     });
   };
+
+  const openModal = () => setModalVisible(true);
+
+  const closeModal = () => setModalVisible(false);
 
   const darkModeT = t('src.screens.setting.DM');
   const appearanceT = t('src.screens.setting.App');
   const languageT = t('src.screens.setting.Lan');
+  const viT = t('src.screens.setting.Vi');
+  const enT = t('src.screens.setting.En');
   const logoutT = t('src.screens.setting.LO');
 
   return (
@@ -66,18 +74,24 @@ export const SettingScreen = () => {
       <TouchableOpacity style={styles.row} onPress={openLanguageModal}>
         <MyText>{languageT}</MyText>
         <View style={styles.languageContainer}>
-          <MyText>{selectedLanguageName}</MyText>
+          <MyText>{selectedLanguageName === 'vietnam' ? viT : enT}</MyText>
           <View style={styles.iconContainer}>
             <ArrowSVG fill={colors.text} width={16} height={16} />
           </View>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.row} onPress={logout}>
+      <TouchableOpacity style={styles.row} onPress={openModal}>
         <MyText>{logoutT}</MyText>
         <View style={styles.iconContainer}>
           <ArrowSVG fill={colors.text} width={16} height={16} />
         </View>
       </TouchableOpacity>
+
+      <MyModal
+        visible={modalVisible}
+        onRequestClose={closeModal}
+        onRequestSubmit={logout}
+      />
     </View>
   );
 };

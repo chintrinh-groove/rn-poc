@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, {Path} from 'react-native-svg';
 
-export function Building(props) {
+export function BuildingSVG(props) {
   const {fill = '#000'} = props;
   return (
     <Svg
@@ -16,7 +16,7 @@ export function Building(props) {
   );
 }
 
-export function ActiveBuilding(props) {
+export function ActiveBuildingSVG(props) {
   const {fill = '#000'} = props;
   return (
     <Svg
