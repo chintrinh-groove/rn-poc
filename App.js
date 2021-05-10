@@ -26,11 +26,11 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <NetInfoProvider>
-        <LanguageProvider>
-          <MyThemeProvider>
+        <MyThemeProvider>
+          <LanguageProvider>
             <AppStack />
-          </MyThemeProvider>
-        </LanguageProvider>
+          </LanguageProvider>
+        </MyThemeProvider>
       </NetInfoProvider>
     </SafeAreaProvider>
   );

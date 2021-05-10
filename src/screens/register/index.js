@@ -120,7 +120,7 @@ export const RegisterScreen = () => {
 
       <MyButton title={registerT} onPress={onSubmit} />
       <Pressable onPress={navigateLogin}>
-        <MyText>{logi1nT}</MyText>
+        <MyText>{loginT}</MyText>
       </Pressable>
     </View>
   );

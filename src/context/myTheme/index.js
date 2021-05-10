@@ -1,10 +1,11 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext, useState, useEffect} from 'react';
 // import {useColorScheme} from 'react-native';
 import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
 } from '@react-navigation/native';
+import {useAsyncStorage} from '@react-native-async-storage/async-storage';
 
 import {PRIMARY_COLOR} from '../../constants';
 import {getRandomColor} from '../../utils';
@@ -14,10 +15,23 @@ const MyThemeContext = createContext();
 export const MyThemeProvider = ({children}) => {
   // const scheme = useColorScheme();
   const [isDark, setIsDark] = useState(false);
-  const [primary, setPrimary] = useState(PRIMARY_COLOR);
+  const [color, setColor] = useState(PRIMARY_COLOR);
+  const {getItem: getPrimary, setItem: setPrimary} = useAsyncStorage(
+    '@primary',
+  );
+  const {getItem: getDark, setItem: setDark} = useAsyncStorage('@dark');
+
+  useEffect(() => {
+    (async () => {
+      const primary = await getPrimary();
+      primary && setColor(primary);
+      const dark = await getDark();
+      dark && setIsDark(JSON.parse(dark));
+    })();
+  }, []);
 
   const MyTheme = {
-    primary,
+    primary: color,
   };
 
   const MyDarkTheme = {
@@ -52,13 +66,19 @@ export const MyThemeProvider = ({children}) => {
     },
   };
 
-  const toggleColor = () => {
-    const randomColor = getRandomColor();
-    setPrimary(randomColor);
+  const selectDark = mode => {
+    setDark(JSON.stringify(mode));
+    setIsDark(mode);
+  };
+
+  const selectPrimary = color => {
+    setPrimary(color);
+    setColor(color);
   };
 
   return (
-    <MyThemeContext.Provider value={{isDark, setIsDark, primary, setPrimary}}>
+    <MyThemeContext.Provider
+      value={{isDark, selectDark, setIsDark, primary: color, selectPrimary}}>
       <NavigationContainer theme={isDark ? MyDarkTheme : MyLightTheme}>
         {children}
       </NavigationContainer>

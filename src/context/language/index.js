@@ -7,19 +7,20 @@ import React, {
 import {
   Modal,
   View,
-  StyleSheet,
   Text,
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native';
 import {initReactI18next, useTranslation} from 'react-i18next';
 import i18n from 'i18next';
+import {useAsyncStorage} from '@react-native-async-storage/async-storage';
+import {useTheme} from '@react-navigation/native';
 
 import enTranslation from '../../assets/language/en.json';
 import viTranslation from '../../assets/language/vi.json';
 import {CheckSVG} from '../../assets';
-import {PRIMARY_COLOR} from '../../constants';
-// import {styles} from '../../screens/sample/styles';
+
+import {styles} from './styles';
 
 // the translations
 // (tip move them in a JSON file and import them)
@@ -52,8 +53,10 @@ i18n
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({children}) => {
+  const {getItem: getLanguage, setItem: setLanguage} = useAsyncStorage(
+    '@language',
+  );
   const {i18n} = useTranslation();
-  const [language, setLanguage] = useState('en');
   const [modalVisible, setModalVisible] = useState(false);
   const [languages, setLanguages] = useState([
     {
@@ -67,12 +70,13 @@ export const LanguageProvider = ({children}) => {
       checked: false,
     },
   ]);
+  const {colors} = useTheme();
 
   useLayoutEffect(() => {
     (async () => {
-      //   const language = await getLanguage();
-      //   selectLanguage(language ?? Language.EN);
-      selectLanguage(language);
+      const language = await getLanguage();
+      // selectLanguage(language ?? Language.EN);
+      selectLanguage(language ?? 'en');
     })();
   }, [i18n]);
 
@@ -98,7 +102,7 @@ export const LanguageProvider = ({children}) => {
   return (
     <LanguageContext.Provider
       value={{
-        language,
+        language: i18n.language,
         selectLanguage,
         modalVisible,
         openLanguageModal,
@@ -122,7 +126,7 @@ export const LanguageProvider = ({children}) => {
                   style={styles.row}
                   onPress={() => selectLanguage(language.id)}>
                   <Text>{language.value}</Text>
-                  {language.checked && <CheckSVG fill={PRIMARY_COLOR} />}
+                  {language.checked && <CheckSVG fill={colors.primary} />}
                 </TouchableOpacity>
                 {index !== languages.length - 1 && (
                   <View style={styles.divider} />
@@ -137,60 +141,3 @@ export const LanguageProvider = ({children}) => {
 };
 
 export const useLanguage = () => useContext(LanguageContext);
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  modalView: {
-    backgroundColor: 'white',
-    borderRadius: 32,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: 56,
-  },
-  divider: {
-    borderTopColor: '#d3d3d3',
-    borderTopWidth: 1,
-  },
-  // button: {
-  //   borderRadius: 20,
-  //   padding: 10,
-  //   elevation: 2,
-  // },
-  // buttonOpen: {
-  //   backgroundColor: '#F194FF',
-  // },
-  // buttonClose: {
-  //   backgroundColor: '#2196F3',
-  // },
-  // textStyle: {
-  //   color: 'white',
-  //   fontWeight: 'bold',
-  //   textAlign: 'center',
-  // },
-  // modalText: {
-  //   marginBottom: 15,
-  //   textAlign: 'center',
-  // },
-});

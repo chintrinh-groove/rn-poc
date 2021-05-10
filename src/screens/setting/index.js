@@ -14,7 +14,7 @@ import {styles} from './styles';
 export const SettingScreen = () => {
   const {colors} = useTheme();
   const {t} = useTranslation();
-  const {isDark, setIsDark} = useMyTheme();
+  const {isDark, selectDark, setIsDark} = useMyTheme();
   const {selectedLanguageName, openLanguageModal} = useLanguage();
   const navigation = useNavigation();
 
@@ -54,7 +54,7 @@ export const SettingScreen = () => {
         <MyText>{darkModeT}</MyText>
         <MySwitch
           value={isDark}
-          onValueChange={({name, value}) => setIsDark(value)}
+          onValueChange={({name, value}) => selectDark(value)}
         />
       </View>
       <TouchableOpacity style={styles.row} onPress={navigateTheme}>

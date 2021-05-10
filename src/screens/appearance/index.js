@@ -19,11 +19,11 @@ const colors = [
   '#1890ff',
   '#2f54eb',
   '#722ed1',
-  '#eb2f96',
+  '#EA168C',
 ];
 
 export const AppearanceScreen = () => {
-  const {primary, setPrimary} = useMyTheme();
+  const {primary, selectPrimary} = useMyTheme();
 
   return (
     <View style={styles.container}>
@@ -37,7 +37,7 @@ export const AppearanceScreen = () => {
           <TouchableOpacity
             key={index}
             style={[styles.colorBox, {backgroundColor: color}]}
-            onPress={() => setPrimary(color)}>
+            onPress={() => selectPrimary(color)}>
             {primary === color && <CheckSVG fill={'#000'} />}
           </TouchableOpacity>
         ))}

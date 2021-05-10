@@ -5,7 +5,6 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  useWindowDimensions,
   RefreshControl,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -20,7 +19,6 @@ import {styles} from './styles';
 
 export const AppScreen = () => {
   const {connected} = useNetInfo();
-  const {width: windowWidth, height: windowHeight} = useWindowDimensions();
 
   const [videoId, setVideoId] = useState('imFTcjHIY_s');
   const [videos, setVideos] = useState([]);
@@ -102,11 +100,7 @@ export const AppScreen = () => {
           // this.setState({error: e.error});
           setError(e.error);
         }}
-        style={{
-          alignSelf: 'stretch',
-          width: windowWidth,
-          height: (windowWidth * 3) / 4,
-        }}
+        style={styles.youtubeContainer}
       />
       {/* <MyFlatList url="https://jsonplaceholder.typicode.com/photos?" /> */}
       <FlatList
@@ -114,10 +108,8 @@ export const AppScreen = () => {
         renderItem={({item}) => {
           return (
             <TouchableOpacity
-              style={{marginVertical: 8, flexDirection: 'row'}}
-              onPress={() => {
-                setVideoId(item.id.videoId);
-              }}>
+              style={styles.row}
+              onPress={() => setVideoId(item.id.videoId)}>
               <Image
                 style={{
                   width: item.snippet.thumbnails.default.width,
@@ -125,12 +117,7 @@ export const AppScreen = () => {
                 }}
                 source={{uri: item.snippet.thumbnails.default.url}}
               />
-              <View
-                style={{
-                  paddingHorizontal: 16,
-                  flex: 1,
-                  justifyContent: 'space-between',
-                }}>
+              <View style={styles.contentContainer}>
                 <View>
                   <MyText h5 bold numberOfLines={1}>
                     {item.snippet.title}

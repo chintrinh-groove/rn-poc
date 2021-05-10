@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 // import firestore from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
+import remoteConfig from '@react-native-firebase/remote-config';
 
 export const fbAuth = auth();
 // export const fbFirestore = firestore();
