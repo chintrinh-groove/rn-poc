@@ -168,6 +168,8 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             firebaseCrashlytics {
                 nativeSymbolUploadEnabled true
+                 unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/debug_Debug/out/lib'
+		      strippedNativeLibsDir 'build/intermediates/stripped_native_libs/debug_Debug/out/lib'
             }
         }
     }
